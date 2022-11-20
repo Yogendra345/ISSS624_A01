@@ -368,8 +368,6 @@ ggplot(data=mpsz3414,
       y = "Pre-school Count")
 ```
 
-## 
-
-End of Page.
+# End of Page...!!!
 
 ## 
