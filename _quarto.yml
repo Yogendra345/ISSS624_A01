@@ -5,10 +5,10 @@ website:
   title: "ISSS624_A01"
   navbar:
     left: 
-      - text: Hands-On Exercises
+      - text: Hands-On Exercise
         menu: 
           - text: Hands-On Exercise 1
-          - href: HandsOn_Exercise1/HandsOn_Exercise1.qmd
+          - href: HandsOn_Exercise / HandsOn_Exercise1.qmd
     right: 
       - href: index.qmd
         text: Home

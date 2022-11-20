@@ -2,8 +2,12 @@
 title: "About"
 ---
 
-About this site
+# 
 
-```{r}
-1 + 1
-```
+This webpage is created by Yogendra as a part of his Applied Geospatial Analysis Course at Singapore Management University.
+
+He can be contacted at `yogendrass.2022@mitb.smu.edu.sg`
+
+LinkedIn <https://www.linkedin.com/in/yogendra-shinde-746864a/>
+
+![](images/logo-SMU.jpg){fig-align="left"}
