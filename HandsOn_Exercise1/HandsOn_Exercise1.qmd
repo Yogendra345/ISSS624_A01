@@ -205,6 +205,7 @@ In this section, you will learn how to import an aspatial data into R environmen
 For the purpose of this exercise, the `listings.csv` data downloaded from AirBnb will be used.
 
 ### 
+
 1.5.1 Importing the aspatial data
 
 Since `listings` data set is in csv file format, we will use [*read_csv()*](https://readr.tidyverse.org/reference/read_delim.html) of **readr** package to import `listing.csv` as shown the code chunk below. The output R object is called `listings` and it is a [tibble data frame](https://r4ds.had.co.nz/tibbles.html).
@@ -238,7 +239,7 @@ Things to learn from the arguments above:
 
 -   *coords* argument requires you to provide the column name of the x-coordinates first then followed by the column name of the y-coordinates.
 
--   *crs* argument requires you to provide the coordinates system in epsg format. [EPSG: 4326](https://epsg.io/4326) is wgs84 Geographic Coordinate System and [EPSG: 3414](https://epsg.io/3414) is Singapore SVY21 Projected Coordinate System. You can search for other country\'s epsg code by referring to [epsg.io](https://epsg.io/).
+-   *crs* argument requires you to provide the coordinates system in epsg format. [EPSG: 4326](https://epsg.io/4326) is wgs84 Geographic Coordinate System and [EPSG: 3414](https://epsg.io/3414) is Singapore SVY21 Projected Coordinate System. You can search for other country's epsg code by referring to [epsg.io](https://epsg.io/).
 
 -   *%\>%* is used to nest *st_transform()* to transform the newly created simple feature data frame into svy21 projected coordinates system.
 
@@ -255,6 +256,7 @@ Besides providing functions to handling (i.e. importing, exporting, assigning p
 In this section, you will learn how to perform two commonly used geoprocessing functions, namely [buffering](https://www.gislounge.com/buffers-in-gis/) and point in polygon count.
 
 ### 
+
 1.6.1 Buffering
 
 The scenario:
@@ -323,6 +325,7 @@ mpsz3414 <- mpsz3414 %>%
 ## 1.7 Exploratory Data Analysis (EDA)
 
 ### 
+
 1.7.1 Histogram.
 
 In practice, many geospatial analytics start with 'Exploratory Data Analysis'. In this section, we will learn how to use appropriate [ggplot2](https://ggplot2.tidyverse.org/) functions to create functional and yet truthful statistical graphs for EDA purposes.
@@ -351,7 +354,7 @@ ggplot(data=mpsz3414,
 
 ### 
 
-1.7.2  **Using ggplot2 method to plot a scatterplot.**
+1.7.2 **Using ggplot2 method to plot a scatterplot.**
 
 Following graph is showing the relationship between Pre-school Density and Pre-school Count.
 
@@ -366,12 +369,7 @@ ggplot(data=mpsz3414,
 ```
 
 ## 
-End of Page. 
+
+End of Page.
 
 ## 
-
-
-
-
-
-
