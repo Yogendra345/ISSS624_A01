@@ -1,0 +1,40 @@
+---
+title: "In-class_Exercise_01"
+author: "Yogendra Shinde"
+editor: visual
+---
+
+# Overview
+
+This is XXXX
+
+Getting Started
+
+The code chunk below will install and load tidyverse and sf packages.
+
+```{r}
+pacman::p_load(sf,tidyverse)
+```
+
+Importing Geospatial Data
+
+Importing Polygon Features
+
+This code chunk will import ESRI shapefile into R
+
+```{r}
+mpsz <-st_read(dsn = "data/geospatial", layer = "MP14_SUBZONE_WEB_PL")
+```
+
+Importing GIS Data in kml format
+
+```{r}
+preschool = st_read("C:/Yogendra345/ISSS624_A01/Inclass_Ex/Inclass_Ex01/data/geospatial/pre-schools-location-kml.kml")
+```
+
+Importing and transforming into projected co-ordinates system
+
+```{r}
+preschool = st_read("C:/Yogendra345/ISSS624_A01/Inclass_Ex/Inclass_Ex01/data/geospatial/pre-schools-location-kml.kml")%>%
+  st_transform(crs = 3414)
+```
