@@ -4,7 +4,7 @@ title: "About"
 
 # 
 
-This webpage is created by Yogendra as a part of his Applied Geospatial Analysis Course at Singapore Management University.
+This webpage is created by Yogendra as a part of his Applied Geospatial Analytics Course at Singapore Management University.
 
 He can be contacted at `yogendrass.2022@mitb.smu.edu.sg`
 
