@@ -6,13 +6,13 @@ editor: visual
 
 # Choropleth Mapping with R.
 
-## 1. Overview
+## 1. Overview.
 
 Choropleth mapping involves the symbolization of enumeration units, such as countries, provinces, states, counties or census units, using area patterns or graduated colors. For example, a social scientist may need to use a choropleth map to portray the spatial distribution of aged population of Singapore by Master Plan 2014 Subzone Boundary.
 
 In this chapter, we will learn how to plot functional and truthful choropleth maps by using an R package called \*\*tmap\*\* package.
 
-## 2. Getting Started
+## 2. Getting Started.
 
 In this hands-on exercise, the key R package use is [**tmap**](https://cran.r-project.org/web/packages/tmap/) package in R. Beside **tmap** package, four other R packages will be used. They are:
 
@@ -34,7 +34,7 @@ pacman::p_load(sf, tmap, tidyverse)
 
 ## 3. Importing Data into R.
 
-### 3.1 The Data
+### 3.1 The Data.
 
 Two data set will be used to create the choropleth map. They are:
 
@@ -59,7 +59,7 @@ mpsz
 
 #### 
 
-### 3.3 Importing Attribute Data into R
+### 3.3 Importing Attribute Data into R.
 
 Next, we will import *respopagsex2000to2018.csv* file into RStudio and save the file into an R dataframe called *popagsex*.
 
@@ -87,7 +87,7 @@ Before thematic map can be prepared, we are required to prepare a data table wit
 
 -   DEPENDENCY: the ratio between young and aged against economy active group
 
-#### 3.4.1 Data wrangling
+#### 3.4.1 Data wrangling.
 
 The following data wrangling and transformation functions will be used:
 
@@ -150,7 +150,7 @@ Thing to learn from the code chunk above:
     write_rds(mpsz_pop2020, "data/rds/mpszpop2020.rds")
     ```
 
-## 4. Choropleth Mapping Geospatial Data Using *tmap*
+## 4. Choropleth Mapping Geospatial Data Using *tmap.*
 
 Two approaches can be used to prepare thematic map using *tmap*, they are:
 
@@ -158,7 +158,7 @@ Two approaches can be used to prepare thematic map using *tmap*, they are:
 
 -   Plotting highly customisable thematic map by using tmap elements.
 
-    ### 4.1 Plotting a choropleth map quickly by using *qtm()*
+    ### 4.1 Plotting a choropleth map quickly by using *qtm().*
 
     The easiest and quickest to draw a choropleth map using **tmap** is using *qtm()*. It is concise and provides a good default visualisation in many cases.
 
@@ -190,7 +190,7 @@ Two approaches can be used to prepare thematic map using *tmap*, they are:
 
     ### 
 
-    ### 4.2 Creating a choropleth map by using *tmap*'s elements
+    ### 4.2 Creating a choropleth map by using *tmap*'s elements.
 
     Despite its usefulness of drawing a choropleth map quickly and easily, the disadvantge of *qtm()* is that it makes aesthetics of individual layers harder to control. To draw a high quality cartographic choropleth map as shown in the figure below, **tmap**'s drawing elements should be used.
 
@@ -216,7 +216,7 @@ Two approaches can be used to prepare thematic map using *tmap*, they are:
 
     #### 
 
-    #### 4.2.1 Drawing a base map
+    #### 4.2.1 Drawing a base map.
 
     The basic building block of **tmap** is *tm_shape()* followed by one or more layer elemments such as *tm_fill()* and *tm_polygons()*.
 
@@ -229,7 +229,7 @@ Two approaches can be used to prepare thematic map using *tmap*, they are:
 
 #### 
 
-#### 4.2.2 Drawing a choropleth map using *tm_polygons()*
+#### 4.2.2 Drawing a choropleth map using *tm_polygons().*
 
 To draw a choropleth map showing the geographical distribution of a selected variable by planning subzone, we just need to assign the target variable such as *Dependency* to *tm_polygons()*.
 
@@ -281,7 +281,7 @@ Beside *alpha* argument, there are three other arguments for *tm_borders()*, the
 
 #### 
 
-4.2.4 Data classification methods of **tmap**
+4.2.4 Data classification methods of **tmap.**
 
 Most choropleth maps employ some methods of data classification. The point of classification is to take a large number of observations and group them into data ranges or classes.
 
