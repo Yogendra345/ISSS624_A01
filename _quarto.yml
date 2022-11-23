@@ -4,11 +4,13 @@ project:
 website:
   title: "ISSS624_A01"
   navbar:
-    left: 
-      - text: Hands-On Exercise
+    left:
+      - text: Hands-on Exercise
         menu: 
-          - text: Hands-On Exercise 1
-          - href: HandsOn_Exercise1.qmd
+        - text: Hands-on Exercise 1.
+        - href: HandsOn_Exercise1/HandsOn_Exercise1.qmd
+        - text: Hands-on Exercise 2.
+        - href: HandsOn_Exercise2/HandsOn_Ex02.qmd
     right: 
       - href: index.qmd
         text: Home

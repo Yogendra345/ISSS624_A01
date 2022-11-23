@@ -2,7 +2,7 @@
 title: "ISSS624_A01"
 ---
 
-# Welcome to Application of Geospatial Analytics  Using R 
+# Welcome to Application of Geospatial Analytics Using R
 
 ### 1. What is Geospatial Analytics ?
 
@@ -10,7 +10,7 @@ If I want to describe it in one line then I can say -
 
 Geospatial Analytics is a Statistical Analysis of Geographical Information.
 
-### 2. Why  Geospatial Analytics is required ?
+### 2. Why Geospatial Analytics is required ?
 
 Internet and mobile phone revolution enabled easy access of GPS enabled data capturing devices to common man. There is therefore associated increase in demand for explicit spatial analysis of such data. Such analytics help policy makers, decision makers to understand underlying trends of socio-economic activities. If one wants to understand various aspects as mentioned below, then ***Geospatial Analytics*** is the key.
 

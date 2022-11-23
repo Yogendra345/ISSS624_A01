@@ -1,5 +1,6 @@
 ---
-title: "HandsOn_Exer01 : Geospatial Data Wrangling with R"
+title: "Hands-On_Ex01 : Geospatial Data Wrangling with R"
+author: "Yogendra"
 editor: visual
 ---
 
@@ -12,7 +13,7 @@ In this hands-on exercise, we will understand how to import & wrangle Geo-spatia
 Use sf and tidyverse packages.
 
 1.  **sf** for importing, managing, and processing geospatial data, and
-2.  **tidyverse** for performing data science tasks such as importing, wrangling and visualising data.
+2.  **tidyverse** for performing data science tasks such as importing, wrangling and visualizing data.
 
 Tidyverse consists of a family of R packages. In this hands-on exercise, the following packages will be used:
 
@@ -368,6 +369,8 @@ ggplot(data=mpsz3414,
       y = "Pre-school Count")
 ```
 
-# End of Page...!!!
+## 
+
+End of Page.
 
 ## 
