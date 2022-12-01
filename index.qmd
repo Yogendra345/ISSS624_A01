@@ -2,7 +2,7 @@
 title: "ISSS624_A01"
 ---
 
-# Welcome to Application of Geospatial Analytics Using R
+# Welcome to Application of Geospatial Analytics Using R.
 
 ### 1. What is Geospatial Analytics ?
 
@@ -21,3 +21,9 @@ Internet and mobile phone revolution enabled easy access of GPS enabled data cap
 5.  Pollution
 6.  Geo-marketing (store location analysis)
 7.  Emergency Planning
+8.  Water resources analysis
+9.  Pandemic Analysis
+
+### 3. What is WGS84 ?
+
+World Geodetic System 84 (WGS 84) is based on a consistent set of constants and model parameters that describe the Earth's size, shape, and gravity and geomagnetic fields. WGS84 consists of a reference ellipsoid, a standard coordinate system, altitude data, and a geoid. The error of WGS84 is believed to be less than 2 centimeters to the center mass.

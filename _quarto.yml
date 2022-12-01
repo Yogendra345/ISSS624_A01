@@ -7,10 +7,15 @@ website:
     left:
       - text: Hands-on Exercise
         menu: 
-        - text: Hands-on Exercise 1.
         - href: HandsOn_Exercise1/HandsOn_Exercise1.qmd
-        - text: Hands-on Exercise 2.
         - href: HandsOn_Exercise2/HandsOn_Ex02.qmd
+      - text: In Class Exercise
+        menu: 
+          - text: InClass Exercise Hunan Case Study.
+          - href: InClass_Ex01/InClass_Hunan.qmd
+      - text: Take Home Exercise
+        menu: 
+          - href: InClass_Ex02/Africa_Water/Take_Home_Ex1.qmd
     right: 
       - href: index.qmd
         text: Home
@@ -18,7 +23,7 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: journal
     css: styles.css
     toc: true
 
