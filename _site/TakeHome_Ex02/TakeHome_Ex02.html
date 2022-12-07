@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Yogendra Shinde">
 
-<title>ISSS624_A01</title>
+<title>ISSS624_A01 - Take Home Ex 2 : Regionalization of Multivariate Water Point Attributes with Non-spatially Constrained and Spatially Constrained Clustering Methods.</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +24,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -60,7 +61,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -70,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">ISSS624_A01</span>
     </a>
   </div>
@@ -83,15 +84,15 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hands-on Exercise</a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercise">    
         <li>
-    <a class="dropdown-item" href="./HandsOn_Exercise1/HandsOn_Exercise1.html">
+    <a class="dropdown-item" href="../HandsOn_Exercise1/HandsOn_Exercise1.html">
  <span class="dropdown-text">Hands-On_Ex01 : Geospatial Data Wrangling with R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./HandsOn_Exercise2/HandsOn_Ex02.html">
+    <a class="dropdown-item" href="../HandsOn_Exercise2/HandsOn_Ex02.html">
  <span class="dropdown-text">Hands-On_Ex02 : Choropleth Mapping with R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./HandsOn_Exercise3/HandsOn_Ex03.html">
+    <a class="dropdown-item" href="../HandsOn_Exercise3/HandsOn_Ex03.html">
  <span class="dropdown-text">Hands_On_Ex3 Geographical Segmentation with Spatially Constrained Clustering Techniques</span></a>
   </li>  
     </ul>
@@ -101,7 +102,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercise">    
         <li class="dropdown-header">InClass Exercise Hunan Case Study.</li>
         <li>
-    <a class="dropdown-item" href="./InClass_Ex01/InClass_Hunan.html">
+    <a class="dropdown-item" href="../InClass_Ex01/InClass_Hunan.html">
  <span class="dropdown-text">InClass_Ex01 : Spatial Weights and Applications</span></a>
   </li>  
     </ul>
@@ -110,18 +111,22 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false">Take Home Exercise</a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
         <li>
-    <a class="dropdown-item" href="./InClass_Ex02/Africa_Water/Take_Home_Ex1.html">
+    <a class="dropdown-item" href="../InClass_Ex02/Africa_Water/Take_Home_Ex1.html">
  <span class="dropdown-text">Take Home Ex 1 : Nigeria Water Functional &amp; Non Functional Water Points</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../TakeHome_Ex02/TakeHome_Ex02.html">
+ <span class="dropdown-text">Take Home Ex 2 : Regionalization of Multivariate Water Point Attributes with Non-spatially Constrained and Spatially Constrained Clustering Methods.</span></a>
   </li>  
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page">Home</a>
+    <a class="nav-link" href="../index.html">Home</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
+    <a class="nav-link" href="../about.html">About</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -138,13 +143,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#welcome-to-application-of-geospatial-analytics-using-r." id="toc-welcome-to-application-of-geospatial-analytics-using-r." class="nav-link active" data-scroll-target="#welcome-to-application-of-geospatial-analytics-using-r.">Welcome to Application of Geospatial Analytics Using R.</a>
-  <ul class="collapse">
-  <li><a href="#what-is-geospatial-analytics" id="toc-what-is-geospatial-analytics" class="nav-link" data-scroll-target="#what-is-geospatial-analytics">1. What is Geospatial Analytics ?</a></li>
-  <li><a href="#why-geospatial-analytics-is-required" id="toc-why-geospatial-analytics-is-required" class="nav-link" data-scroll-target="#why-geospatial-analytics-is-required">2. Why Geospatial Analytics is required ?</a></li>
-  <li><a href="#what-is-wgs84" id="toc-what-is-wgs84" class="nav-link" data-scroll-target="#what-is-wgs84">3. What is WGS84 ?</a></li>
-  <li><a href="#what-is-esri-environmental-systems-research-institute-inc.-shapefile-file-and-how-it-is-used" id="toc-what-is-esri-environmental-systems-research-institute-inc.-shapefile-file-and-how-it-is-used" class="nav-link" data-scroll-target="#what-is-esri-environmental-systems-research-institute-inc.-shapefile-file-and-how-it-is-used">4. What is ESRI (Environmental Systems Research Institute, Inc.) Shapefile file and how it is used ?</a></li>
-  </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"></a></li>
+  <li><a href="#setting-the-scene." id="toc-setting-the-scene." class="nav-link" data-scroll-target="#setting-the-scene.">1. Setting the scene.</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  <li><a href="#objectives." id="toc-objectives." class="nav-link" data-scroll-target="#objectives."><strong>2. Objectives.</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -153,13 +155,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ISSS624_A01</h1>
+<h1 class="title">Take Home Ex 2 : Regionalization of Multivariate Water Point Attributes with Non-spatially Constrained and Spatially Constrained Clustering Methods.</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Yogendra Shinde </p>
+          </div>
+  </div>
     
     
   </div>
@@ -167,37 +175,33 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="welcome-to-application-of-geospatial-analytics-using-r." class="level1">
-<h1>Welcome to Application of Geospatial Analytics Using R.</h1>
-<section id="what-is-geospatial-analytics" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-geospatial-analytics">1. What is Geospatial Analytics ?</h3>
-<p>If I want to describe it in one line then I can say -</p>
-<p>Geospatial Analytics is a Statistical Analysis of Geographical Information.</p>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
 </section>
-<section id="why-geospatial-analytics-is-required" class="level3">
-<h3 class="anchored" data-anchor-id="why-geospatial-analytics-is-required">2. Why Geospatial Analytics is required ?</h3>
-<p>Internet and mobile phone revolution enabled easy access of GPS enabled data capturing devices to common man. There is therefore associated increase in demand for explicit spatial analysis of such data. Such analytics help policy makers, decision makers to understand underlying trends of socio-economic activities. If one wants to understand various aspects as mentioned below, then <strong><em>Geospatial Analytics</em></strong> is the key.</p>
+<section id="setting-the-scene." class="level2">
+<h2 class="anchored" data-anchor-id="setting-the-scene.">1. Setting the scene.</h2>
+<p>The process of creating regions is called <a href="https://www.researchgate.net/publication/28153673_Supervised_Regionalization_Methods_A_Survey/link/0fcfd5094046b13d35000000/download">regionalisation</a>. A regionalisation is a special kind of clustering where the objective is to group observations which are similar in their statistical attributes, but also in their spatial location. In this sense, regionalization embeds the same logic as standard clustering techniques, but also applies a series of geographical constraints. Often, these constraints relate to connectivity: two candidates can only be grouped together in the same region if there exists a path from one member to another member that never leaves the region. These paths often model the spatial relationships in the data, such as contiguity or proximity. However, connectivity does not always need to hold for all regions, and in certain contexts it makes sense to relax connectivity or to impose different types of geographic constraints.</p>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+</section>
+<section id="objectives." class="level2">
+<h2 class="anchored" data-anchor-id="objectives."><strong>2. Objectives.</strong></h2>
+<p>In this take-home exercise we are going to regionalize Nigeria by using following measures :</p>
 <ol type="1">
-<li>Availability of affordable housing</li>
-<li>Availability of pre-schools, day-care facilities etc.</li>
-<li>Transportation (Urban and Transport Planning, Logistics etc.)</li>
-<li>Crime</li>
-<li>Pollution</li>
-<li>Geo-marketing (store location analysis)</li>
-<li>Emergency Planning</li>
-<li>Water resources analysis</li>
-<li>Pandemic Analysis</li>
+<li><p>Total number of functional water points.</p></li>
+<li><p>Total number of nonfunctional water points.</p></li>
+<li><p>Percentage of functional water points.</p></li>
+<li><p>Percentage of non-functional water points.</p></li>
+<li><p>Percentage of main water point technology (i.e.&nbsp;Hand Pump).</p></li>
+<li><p>Percentage of usage capacity (i.e.&nbsp;&lt; 1000, &gt;=1000).</p></li>
+<li><p>Percentage of rural water points.</p></li>
 </ol>
-</section>
-<section id="what-is-wgs84" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-wgs84">3. What is WGS84 ?</h3>
-<p>World Geodetic System 84 (WGS 84) is based on a consistent set of constants and model parameters that describe the Earth’s size, shape, and gravity and geomagnetic fields. WGS84 consists of a reference ellipsoid, a standard coordinate system, altitude data, and a geoid. The error of WGS84 is believed to be less than 2 centimeters to the center mass.</p>
-</section>
-<section id="what-is-esri-environmental-systems-research-institute-inc.-shapefile-file-and-how-it-is-used" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-esri-environmental-systems-research-institute-inc.-shapefile-file-and-how-it-is-used">4. What is ESRI (Environmental Systems Research Institute, Inc.) Shapefile file and how it is used ?</h3>
+<div class="cell">
+
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

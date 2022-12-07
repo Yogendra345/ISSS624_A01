@@ -9,6 +9,7 @@ website:
         menu: 
         - href: HandsOn_Exercise1/HandsOn_Exercise1.qmd
         - href: HandsOn_Exercise2/HandsOn_Ex02.qmd
+        - href: HandsOn_Exercise3/HandsOn_Ex03.qmd
       - text: In Class Exercise
         menu: 
           - text: InClass Exercise Hunan Case Study.
@@ -16,6 +17,7 @@ website:
       - text: Take Home Exercise
         menu: 
           - href: InClass_Ex02/Africa_Water/Take_Home_Ex1.qmd
+          - href: TakeHome_Ex02/TakeHome_Ex02.qmd
     right: 
       - href: index.qmd
         text: Home
