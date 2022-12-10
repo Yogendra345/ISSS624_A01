@@ -15,6 +15,7 @@ website:
         menu: 
           - text: InClass Exercise Hunan Case Study.
           - href: InClass_Ex01/InClass_Hunan.qmd
+          - href: InClass_Ex03/In Class_Ex03.qmd
       - text: Take Home Exercise
         menu: 
           - href: InClass_Ex02/Africa_Water/Take_Home_Ex1.qmd
