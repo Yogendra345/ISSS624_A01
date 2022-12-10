@@ -24,7 +24,7 @@ Internet and mobile phone revolution enabled easy access of GPS enabled data cap
 8.  Water resources analysis
 9.  Pandemic Analysis
 
-###  3. What is EPSG ?
+### 3. What is EPSG ?
 
 EPSG stands for European Petroleum Survey Group and is an organization that maintains a geodetic parameter database with standard codes, the **EPSG codes**, for [coordinate systems](http://support.virtual-surveyor.com/support/solutions/articles/1000261350), [datums](http://support.virtual-surveyor.com/solution/articles/1000261330), [spheroids](http://support.virtual-surveyor.com/support/solutions/articles/1000261329), units and such alike. Additionally, this database contains the parameters for these objects or - if they cannot easily be expressed as values - at least references to where such parameters can be found. 
 

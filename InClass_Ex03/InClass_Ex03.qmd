@@ -67,7 +67,7 @@ I received error while installing gtsummary. Hence trying to install this packag
 install.packages("gtsummary")
 ```
 
-## 4. A short note about GWmodel.
+## 4. Important note on GWmodel.
 
 [**GWmodel**](https://www.jstatsoft.org/article/view/v063i17) package provides a collection of localized spatial statistical methods, namely :
 
@@ -111,7 +111,7 @@ The code chunk below will be used to verify the newly transformed *mpsz_svy21*
 st_crs(mpsz_svy21)
 ```
 
-Notice that the EPSG: is indicated as *3414* now.
+Notice that the EPSG is indicated as *3414* now.
 
 Next, we will reveal the extent of *mpsz_svy21* by using `st_bbox()` of sf package.
 
@@ -131,7 +131,7 @@ condo_resale = read_csv("data/aspatial/Condo_resale_2015.csv")
 
 After importing the data file into R, it is important for us to examine if the data file has been imported correctly.
 
-The codes chunks below uses `glimpse()` to display the data structure of will do the job.
+The codes chunk below uses `glimpse()` to display the data structure of will do the job.
 
 ```{r}
 glimpse(condo_resale)
