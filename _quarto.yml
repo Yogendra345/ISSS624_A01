@@ -10,6 +10,7 @@ website:
         - href: HandsOn_Exercise1/HandsOn_Exercise1.qmd
         - href: HandsOn_Exercise2/HandsOn_Ex02.qmd
         - href: HandsOn_Exercise3/HandsOn_Ex03.qmd
+        - href: HandsOn_Exercise4/HandsOn_Ex04.qmd
       - text: In Class Exercise
         menu: 
           - text: InClass Exercise Hunan Case Study.

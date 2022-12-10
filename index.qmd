@@ -24,8 +24,17 @@ Internet and mobile phone revolution enabled easy access of GPS enabled data cap
 8.  Water resources analysis
 9.  Pandemic Analysis
 
-### 3. What is WGS84 ?
+###  3. What is EPSG ?
+
+EPSG stands for European Petroleum Survey Group and is an organization that maintains a geodetic parameter database with standard codes, the **EPSG codes**, for [coordinate systems](http://support.virtual-surveyor.com/support/solutions/articles/1000261350), [datums](http://support.virtual-surveyor.com/solution/articles/1000261330), [spheroids](http://support.virtual-surveyor.com/support/solutions/articles/1000261329), units and such alike. Additionally, this database contains the parameters for these objects or - if they cannot easily be expressed as values - at least references to where such parameters can be found. 
+
+Every geographic object (coordinate system, spheroid, unit, etc.) gets assigned a unique number. The database is under active maintenance.
+
+\
+The coordinate system with its EPSG code is usually stored in the source file (GeoTIFF, Shapefile, LandXML, etc.)
+
+### 4. What is WGS84 ?
 
 World Geodetic System 84 (WGS 84) is based on a consistent set of constants and model parameters that describe the Earth's size, shape, and gravity and geomagnetic fields. WGS84 consists of a reference ellipsoid, a standard coordinate system, altitude data, and a geoid. The error of WGS84 is believed to be less than 2 centimeters to the center mass.
 
-### 4. What is ESRI (Environmental Systems Research Institute, Inc.) Shapefile file and how it is used ?
+### 5. What is ESRI (Environmental Systems Research Institute, Inc.) Shapefile file and how it is used ?
