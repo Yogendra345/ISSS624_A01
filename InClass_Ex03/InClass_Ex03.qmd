@@ -7,11 +7,11 @@ editor: visual
 
 ## 1. Overview.
 
-**Geographically weighted regression (GWR)** is a spatial statistical technique that takes non-stationary variables into consideration (e.g., climate; demographic factors; physical environment characteristics) and models the local relationships between these independent variables and an outcome of interest (also known as dependent variable). In this hands-on exercise, we will learn how to build [hedonic pricing](https://www.investopedia.com/terms/h/hedonicpricing.asp) models by using GWR methods. The dependent variable is the **resale prices** of condominium in 2015. The independent variables are divided into either structural and locational.
+Geographically weighted regression (GWR) is a spatial statistical technique that takes non-stationary variables into consideration (e.g., climate; demographic factors; physical environment characteristics) and models the local relationships between these independent variables and an outcome of interest (also known as dependent variable). In this hands-on exercise, we will learn how to build [hedonic pricing](https://www.investopedia.com/terms/h/hedonicpricing.asp) models by using GWR methods. The dependent variable is the **resale prices** of condominium in 2015. The independent variables are divided into either structural and locational.
 
 ### 
 
-### **1.1 What is Hedonic Pricing ?**
+### **1.A  What is Hedonic Pricing ?**
 
 As defined by Cambridge dictionary, the word Hedonic means "[**connected with feelings of pleasure**](https://dictionary.cambridge.org/dictionary/english/connected "connected")**"**
 
@@ -49,7 +49,7 @@ The R packages needed for this exercise are as follows :
 
 -   [**corrplot**](https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html) **-** R package for multivariate data visualization and analysis
 
--    **sf -** Spatial data handling
+-   **sf -** Spatial data handling
 
 -   **tidyverse**, especially **readr**, **ggplot2** and **dplyr -** Attribute data handling
 
