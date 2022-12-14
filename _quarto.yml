@@ -19,7 +19,7 @@ website:
       - text: Take Home Exercise
         menu: 
           - href: InClass_Ex02/Africa_Water/Take_Home_Ex1.qmd
-          - href: TakeHome_Ex02/TakeHome_Ex02.qmd
+          - href: TakeHome_Ex02/TakeHome_Ex02_Updated.qmd
     right: 
       - href: index.qmd
         text: Home

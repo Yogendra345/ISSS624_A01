@@ -217,11 +217,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"></a></li>
   <li><a href="#setting-the-scene." id="toc-setting-the-scene." class="nav-link" data-scroll-target="#setting-the-scene.">1. Setting the scene.</a></li>
   <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
-  <li><a href="#objectives." id="toc-objectives." class="nav-link" data-scroll-target="#objectives."><strong>2. Objectives.</strong></a></li>
   <li><a href="#installing-and-loading-required-packages." id="toc-installing-and-loading-required-packages." class="nav-link" data-scroll-target="#installing-and-loading-required-packages.">3. Installing and loading required packages.</a></li>
   <li><a href="#importing-data." id="toc-importing-data." class="nav-link" data-scroll-target="#importing-data.">4. Importing Data.</a>
   <ul class="collapse">
   <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"></a></li>
+  <li><a href="#importing-water-point-data." id="toc-importing-water-point-data." class="nav-link" data-scroll-target="#importing-water-point-data.">4.1 Importing Water point Data.</a></li>
   <li><a href="#importing-nigeria-lga-level-boundary-data." id="toc-importing-nigeria-lga-level-boundary-data." class="nav-link" data-scroll-target="#importing-nigeria-lga-level-boundary-data.">5. Importing Nigeria LGA level boundary data.</a></li>
   </ul></li>
   <li><a href="#point-in-polygon-overlay." id="toc-point-in-polygon-overlay." class="nav-link" data-scroll-target="#point-in-polygon-overlay.">6. Point in Polygon Overlay.</a></li>
@@ -232,7 +232,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"></a></li>
   <li><a href="#extracting-non-functional-water-point." id="toc-extracting-non-functional-water-point." class="nav-link" data-scroll-target="#extracting-non-functional-water-point.">7.3 Extracting non-functional water point.</a></li>
   <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"></a></li>
-  <li><a href="#extracting-water-point-with-unknown-class." id="toc-extracting-water-point-with-unknown-class." class="nav-link" data-scroll-target="#extracting-water-point-with-unknown-class.">7.3 Extracting water point with Unknown class.</a></li>
+  <li><a href="#extracting-water-point-with-unknown-class." id="toc-extracting-water-point-with-unknown-class." class="nav-link" data-scroll-target="#extracting-water-point-with-unknown-class.">7.3 Extracting water point with ‘Unknown’ class.</a></li>
   <li><a href="#understand-distribution-of-water-point-technology." id="toc-understand-distribution-of-water-point-technology." class="nav-link" data-scroll-target="#understand-distribution-of-water-point-technology.">7.4 Understand distribution of water point technology.</a></li>
   </ul></li>
   <li><a href="#performing-point-in-polygon-count." id="toc-performing-point-in-polygon-count." class="nav-link" data-scroll-target="#performing-point-in-polygon-count.">8. Performing Point-in-Polygon Count.</a></li>
@@ -269,36 +269,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="setting-the-scene." class="level2">
 <h2 class="anchored" data-anchor-id="setting-the-scene.">1. Setting the scene.</h2>
-<p>The process of creating regions is called <a href="https://www.researchgate.net/publication/28153673_Supervised_Regionalization_Methods_A_Survey/link/0fcfd5094046b13d35000000/download">regionalisation</a>. A regionalisation is a special kind of clustering where the objective is to group observations which are similar in their statistical attributes, but also in their spatial location. In this sense, regionalization embeds the same logic as standard clustering techniques, but also applies a series of geographical constraints. Often, these constraints relate to connectivity: two candidates can only be grouped together in the same region if there exists a path from one member to another member that never leaves the region. These paths often model the spatial relationships in the data, such as contiguity or proximity. However, connectivity does not always need to hold for all regions, and in certain contexts it makes sense to relax connectivity or to impose different types of geographic constraints.</p>
-</section>
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1"></h2>
-</section>
-<section id="objectives." class="level2">
-<h2 class="anchored" data-anchor-id="objectives."><strong>2. Objectives.</strong></h2>
-<p>In this take-home exercise we are going to regionalize Nigeria by using following measures :</p>
+<p>In this take-home exercise we are going to regionalise Nigeria.The process of creating regions is called <a href="https://www.researchgate.net/publication/28153673_Supervised_Regionalization_Methods_A_Survey/link/0fcfd5094046b13d35000000/download">regionalisation</a>. A regionalisation is a special kind of clustering where the objective is to group observations which are -</p>
+<ul>
+<li><p>Similar in their statistical attributes &amp;</p></li>
+<li><p>Similar in their spatial location.</p></li>
+</ul>
+<p>We are going to regionalise Nigeria by using following measures :</p>
 <ol type="1">
 <li><p>Total number of functional water points.</p></li>
 <li><p>Total number of nonfunctional water points.</p></li>
 <li><p>Percentage of functional water points.</p></li>
 <li><p>Percentage of non-functional water points.</p></li>
 <li><p>Percentage of main water point technology (i.e.&nbsp;Hand Pump).</p></li>
-<li><p>Percentage of usage capacity (i.e.&nbsp;&lt; 1000, &gt;=1000).</p></li>
+<li><p>Percentage of usage capacity.</p></li>
 <li><p>Percentage of rural water points.</p></li>
+</ol>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+<p><strong>2. Approach</strong>.</p>
+<p>As we want to delineate homogeneous region of Nigeria by using geographically referenced multivariate waterpoint attributes data, we will be conducting following analysis -</p>
+<ul>
+<li><p>Hierarchical cluster analysis</p></li>
+<li><p>K means cluster analysis</p></li>
+<li><p>Spatially constrained cluster analysis using SKATER approach</p></li>
+<li><p>Spatially constrained cluster analysis using ClustGeo method</p></li>
+</ul>
+<p>To achieve above mentioned objectives, we will perform following steps.</p>
+<ol type="1">
+<li><p>Import required packages in R environment.</p></li>
+<li><p>Importing required .csv and shapefile into R using sf package.</p></li>
+<li><p>Deriving the proportion of functional and non-functional water point at LGA level using appropriate tidyr and dplyr methods.</p></li>
+<li><p>Combining the geospatial and aspatial data frame into simple feature data frame.</p></li>
+<li><p>Delineating water point measures functional regions by using conventional hierarchical clustering.</p></li>
+<li><p>Delineating water point measures functional regions by using spatially constrained clustering algorithms.</p></li>
+<li><p>Thematic Mapping - Plotting maps to show the water points measures derived by using appropriate statistical graphics and choropleth mapping technique.</p></li>
+<li><p>Analytical Mapping - Plotting functional regions delineated by using both non-spatially constrained and spatially constrained clustering algorithms.</p></li>
 </ol>
 </section>
 <section id="installing-and-loading-required-packages." class="level2">
 <h2 class="anchored" data-anchor-id="installing-and-loading-required-packages.">3. Installing and loading required packages.</h2>
-<p>Before we get started, it is important for us to install the necessary R packages into R and launch these R packages into R environment.</p>
-<p>The R packages needed for this exercise are as follows:</p>
+<p>Let us install necessary R packages into R and launch these R packages into R environment.</p>
+<p>The R packages needed for this exercise are as follows :</p>
 <ul>
-<li><p>Spatial data handling using <strong>sf</strong>, <strong>rgdal</strong> and <strong>spdep</strong></p></li>
-<li><p>Attribute data handling using <strong>tidyverse</strong>, especially <strong>readr</strong>, <strong>ggplot2</strong> and <strong>dplyr. tidyverse</strong> for importing and processing non-spatial data. In this exercise, readr package will be used for importing wkt data and dplyr package will be used to wrangling the data</p></li>
-<li><p>Choropleth mapping using <strong>tmap</strong></p></li>
-<li><p>Multivariate data visualisation and analysis using <strong>coorplot</strong>, <strong>ggpubr</strong>, and <strong>heatmaply</strong></p></li>
-<li><p>Cluster analysis <strong>cluster and ClustGeo</strong></p></li>
+<li><p>Spatial data handling using <strong>sf</strong>, <strong>rgdal</strong> and <strong>spdep.</strong></p></li>
+<li><p>Attribute data handling using <strong>tidyverse</strong>, especially <strong>readr</strong>, <strong>ggplot2</strong> and <strong>dplyr. tidyverse</strong> for importing and processing non-spatial data. In this exercise, <strong>readr</strong> package will be used for importing wkt data and dplyr package will be used to wrangling the data.</p></li>
+<li><p>Choropleth mapping using <strong>tmap.</strong></p></li>
+<li><p>Multivariate data visualisation and analysis using <strong>coorplot</strong>, <strong>ggpubr</strong>, and <strong>heatmaply.</strong></p></li>
+<li><p>Cluster analysis <strong>cluster and ClustGeo.</strong></p></li>
 </ul>
-<p>The code chunks below installs and launches these R packages into R environment.</p>
+<p>The code chunk below installs and launches these R packages into R environment.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(rgdal, spdep, tmap, sf, ClustGeo, funModeling,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               ggpubr, cluster, factoextra, NbClust,</span>
@@ -309,7 +329,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="importing-data.">4. Importing Data.</h2>
 <section id="section-2" class="level3">
 <h3 class="anchored" data-anchor-id="section-2"></h3>
-<p>4.1 Importing Water point Data.</p>
+</section>
+<section id="importing-water-point-data." class="level3">
+<h3 class="anchored" data-anchor-id="importing-water-point-data.">4.1 Importing Water point Data.</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>wp_nga <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/aspatial/Water_Point.csv"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">#clean_country_name</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Nigeria"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -325,34 +347,203 @@ lgl  (2): is_urban, latest_record
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
-<p>Thing to learn from the code chunk above:</p>
+<p>Things to learn from the code chunk above :</p>
 <ul>
 <li><p>The original file name is called <em>Water_Point_Data_Exchange_-PlusWPdx.csv, it has been rename to Water_Point.csv</em> for easy encoding.</p></li>
-<li><p>Instead of using <code>read.csv()</code> of Base R to import the csv file into R, <code>read_csv()</code> is <strong>readr</strong> package is used. This is because during the initial data exploration, we notice that there is at least one field name with space between the field name (ie. <em>New Georeferenced Column</em>)</p></li>
-<li><p>The data file contains water point data of many countries. In this study, we are interested on water point in Nigeria on. Hence, <code>filter()</code> of <strong>dplyr</strong> is used to extract out records belong to Nigeria only.</p></li>
+<li><p>Instead of using <code>read.csv()</code> of Base R to import the csv file into R, <code>read_csv()</code> of <strong>readr</strong> package is used. This is because during the initial data exploration, we noticed that there is at least one field name with <strong>space</strong> between the field name (ie. <em>New Georeferenced Column</em>)</p></li>
+<li><p>The data file contains water point data of many countries. In this study, we are interested on water point in Nigeria on. Hence, <strong><code>filter()</code></strong> of <strong>dplyr</strong> is used to extract out records which belong to Nigeria only.</p></li>
 </ul>
-<section id="convert-wkt-data." class="level4">
-<h4 class="anchored" data-anchor-id="convert-wkt-data.">5. Convert wkt data.</h4>
-<p>After the data are imported into R environment, it is a good practice to review both the data structure and the data table if it is in tibble data frame format in R Studio.</p>
-<p>Notice that the newly imported tibble data frame (i.e.&nbsp;wp_nga) contains a field called <em>New Georeferenced Column</em> which represent spatial data in a textual format. In fact, this kind of text file is popularly known as <strong>Well Known Text</strong> in short <strong>wkt</strong>.</p>
-<p>Two steps will be used to convert an asptial data file in wkt format into a sf data frame by using sf.</p>
-<p>First, <code>st_as_sfc()</code> of sf package is used to derive a new field called <em>Geometry</em> as shown in the code chunk below.</p>
+<hr>
+<section id="convert-well-known-text-wkt-data." class="level4">
+<h4 class="anchored" data-anchor-id="convert-well-known-text-wkt-data.">5. Convert Well Known Text (wkt) data.</h4>
+<p>After the data are imported into R environment, it is a good practice to review both the data structure and the data table if it is in tibble data frame format in R Studio. Notice that the newly imported tibble data frame (i.e.&nbsp;wp_nga) contains a field called <strong><em>NewGeoreferenced Column</em></strong> which represent spatial data in a textual format. In fact, this kind of text file is popularly known as <strong>Well Known Text</strong> in short <strong>wkt</strong>. Two steps will be used to convert an <strong>aspatial</strong> data file in <strong>wkt</strong> format into a sf data frame by using <strong>sf</strong>.</p>
+<ol type="1">
+<li><code>st_as_sfc()</code> of sf package is used to derive a new field called <strong><em>Geometry</em></strong> as shown in the code chunk below.</li>
+</ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>wp_nga<span class="sc">$</span>Geometry <span class="ot">=</span> <span class="fu">st_as_sfc</span>(wp_nga<span class="sc">$</span><span class="st">`</span><span class="at">New Georeferenced Column</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Next, <code>st_sf()</code> will be used to convert the tibble data frame into sf data frame.</p>
+<ol start="2" type="1">
+<li><code>st_sf()</code> will be used to convert the tibble data frame into sf data frame.</li>
+</ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>wp_sf <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(wp_nga, <span class="at">crs=</span><span class="dv">4326</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let us do a quick check by printing summary of <strong>wp_sf</strong>. We can see that new column Geometry is added.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(wp_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     row_id         #source             #lat_deg         #lon_deg     
+ Min.   : 10732   Length:95008       Min.   : 4.302   Min.   : 2.707  
+ 1st Qu.: 52633   Class :character   1st Qu.: 7.360   1st Qu.: 5.517  
+ Median : 86953   Mode  :character   Median : 9.091   Median : 7.891  
+ Mean   :199976                      Mean   : 9.334   Mean   : 7.505  
+ 3rd Qu.:323672                      3rd Qu.:11.833   3rd Qu.: 9.080  
+ Max.   :681838                      Max.   :13.866   Max.   :14.218  
+                                                                      
+ #report_date        #status_id        #water_source_clean
+ Length:95008       Length:95008       Length:95008       
+ Class :character   Class :character   Class :character   
+ Mode  :character   Mode  :character   Mode  :character   
+                                                          
+                                                          
+                                                          
+                                                          
+ #water_source_category #water_tech_clean  #water_tech_category
+ Length:95008           Length:95008       Length:95008        
+ Class :character       Class :character   Class :character    
+ Mode  :character       Mode  :character   Mode  :character    
+                                                               
+                                                               
+                                                               
+                                                               
+ #facility_type     #clean_country_name #clean_adm1        #clean_adm2       
+ Length:95008       Length:95008        Length:95008       Length:95008      
+ Class :character   Class :character    Class :character   Class :character  
+ Mode  :character   Mode  :character    Mode  :character   Mode  :character  
+                                                                             
+                                                                             
+                                                                             
+                                                                             
+ #clean_adm3        #clean_adm4        #install_year    #installer       
+ Length:95008       Length:95008       Min.   :1904    Length:95008      
+ Class :character   Class :character   1st Qu.:2005    Class :character  
+ Mode  :character   Mode  :character   Median :2010    Mode  :character  
+                                       Mean   :2007                      
+                                       3rd Qu.:2012                      
+                                       Max.   :2045                      
+                                       NA's   :48169                     
+  #rehab_year    #rehabilitator     #management_clean  #status_clean     
+ Min.   :2020    Length:95008       Length:95008       Length:95008      
+ 1st Qu.:2020    Class :character   Class :character   Class :character  
+ Median :2020    Mode  :character   Mode  :character   Mode  :character  
+ Mean   :2020                                                            
+ 3rd Qu.:2020                                                            
+ Max.   :2020                                                            
+ NA's   :94994                                                           
+     #pay           #fecal_coliform_presence #fecal_coliform_value
+ Length:95008       Length:95008             Min.   :0            
+ Class :character   Class :character         1st Qu.:0            
+ Mode  :character   Mode  :character         Median :0            
+                                             Mean   :0            
+                                             3rd Qu.:0            
+                                             Max.   :0            
+                                             NA's   :94981        
+ #subjective_quality #activity_id        #scheme_id          #wpdx_id        
+ Length:95008        Length:95008       Length:95008       Length:95008      
+ Class :character    Class :character   Class :character   Class :character  
+ Mode  :character    Mode  :character   Mode  :character   Mode  :character  
+                                                                             
+                                                                             
+                                                                             
+                                                                             
+    #notes           #orig_lnk          #photo_lnk        #country_id       
+ Length:95008       Length:95008       Length:95008       Length:95008      
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+  #data_lnk         #distance_to_primary_road #distance_to_secondary_road
+ Length:95008       Min.   :    0.01          Min.   :    0.0            
+ Class :character   1st Qu.: 1361.68          1st Qu.:  788.6            
+ Mode  :character   Median : 6647.50          Median : 4446.0            
+                    Mean   :10177.43          Mean   : 7934.7            
+                    3rd Qu.:15132.29          3rd Qu.:11083.7            
+                    Max.   :82666.56          Max.   :94773.0            
+                                                                         
+ #distance_to_tertiary_road #distance_to_city   #distance_to_town
+ Min.   :    0.0            Min.   :    12.12   Min.   :   10    
+ 1st Qu.:  261.5            1st Qu.: 20693.47   1st Qu.: 8319    
+ Median : 1442.4            Median : 41935.41   Median :17866    
+ Mean   : 3853.2            Mean   : 49220.21   Mean   :22977    
+ 3rd Qu.: 5114.6            3rd Qu.: 71940.78   3rd Qu.:32230    
+ Max.   :58874.0            Max.   :216727.25   Max.   :97759    
+                                                                 
+ water_point_history rehab_priority     water_point_population
+ Length:95008        Min.   :     0.0   Min.   :     0        
+ Class :character    1st Qu.:   136.5   1st Qu.:   117        
+ Mode  :character    Median :   522.0   Median :   413        
+                     Mean   :  1545.4   Mean   :  1246        
+                     3rd Qu.:  1527.0   3rd Qu.:  1169        
+                     Max.   :384595.0   Max.   :384595        
+                     NA's   :53109      NA's   :539           
+ local_population_1km crucialness_score pressure_score    usage_capacity  
+ Min.   :     0       Min.   :0.000     Min.   :  0.001   Min.   :  50.0  
+ 1st Qu.:   597       1st Qu.:0.130     1st Qu.:  0.397   1st Qu.: 300.0  
+ Median :  1756       Median :0.304     Median :  1.183   Median : 300.0  
+ Mean   :  3723       Mean   :0.414     Mean   :  3.210   Mean   : 488.6  
+ 3rd Qu.:  4393       3rd Qu.:0.628     3rd Qu.:  3.103   3rd Qu.:1000.0  
+ Max.   :384595       Max.   :1.000     Max.   :776.970   Max.   :1000.0  
+ NA's   :539          NA's   :6879      NA's   :6879                      
+  is_urban       days_since_report staleness_score latest_record 
+ Mode :logical   Min.   :  32      Min.   :23.13   Mode:logical  
+ FALSE:75444     1st Qu.:2580      1st Qu.:41.49   TRUE:95008    
+ TRUE :19564     Median :2687      Median :42.87                 
+                 Mean   :2564      Mean   :44.94                 
+                 3rd Qu.:2791      3rd Qu.:44.34                 
+                 Max.   :4645      Max.   :99.00                 
+                                                                 
+  location_id      cluster_size   #clean_country_id  #country_name     
+ Min.   : 23741   Min.   :1.000   Length:95008       Length:95008      
+ 1st Qu.:210091   1st Qu.:1.000   Class :character   Class :character  
+ Median :241080   Median :1.000   Mode  :character   Mode  :character  
+ Mean   :248184   Mean   :1.047                                        
+ 3rd Qu.:270210   3rd Qu.:1.000                                        
+ Max.   :407805   Max.   :4.000                                        
+                                                                       
+ #water_source      #water_tech          #status             #adm2          
+ Length:95008       Length:95008       Length:95008       Length:95008      
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+    #adm3           #management           #adm1          
+ Length:95008       Length:95008       Length:95008      
+ Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character  
+                                                         
+                                                         
+                                                         
+                                                         
+ New Georeferenced Column lat_deg_original lat_lon_deg        lon_deg_original
+ Length:95008             Min.   : NA      Length:95008       Min.   : NA     
+ Class :character         1st Qu.: NA      Class :character   1st Qu.: NA     
+ Mode  :character         Median : NA      Mode  :character   Median : NA     
+                          Mean   :NaN                         Mean   :NaN     
+                          3rd Qu.: NA                         3rd Qu.: NA     
+                          Max.   : NA                         Max.   : NA     
+                          NA's   :95008                       NA's   :95008   
+ public_data_source  converted             count   created_timestamp 
+ Length:95008       Length:95008       Min.   :1   Length:95008      
+ Class :character   Class :character   1st Qu.:1   Class :character  
+ Mode  :character   Mode  :character   Median :1   Mode  :character  
+                                       Mean   :1                     
+                                       3rd Qu.:1                     
+                                       Max.   :1                     
+                                                                     
+ updated_timestamp           Geometry    
+ Length:95008       POINT        :95008  
+ Class :character   epsg:4326    :    0  
+ Mode  :character   +proj=long...:    0  
+                                         
+                                         
+                                         
+                                         </code></pre>
+</div>
 </div>
 </section>
 </section>
 <section id="importing-nigeria-lga-level-boundary-data." class="level3">
 <h3 class="anchored" data-anchor-id="importing-nigeria-lga-level-boundary-data.">5. Importing Nigeria LGA level boundary data.</h3>
-<p>For the purpose of this exercise, shapefile downloaded from <a href="https://www.geoboundaries.org/">geoBoundaries</a> portal will be used.</p>
+<p>Note that <strong><em>shapefile</em></strong> downloaded from <a href="https://www.geoboundaries.org/">geoBoundaries</a> portal will be used.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>nga <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data</span><span class="sc">\\</span><span class="st">geospatial</span><span class="sc">\\</span><span class="st">geoBoundaries-NGA-ADM2-all"</span>,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">layer =</span> <span class="st">"geoBoundaries-NGA-ADM2"</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">crs =</span> <span class="dv">4326</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nga <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data</span><span class="sc">\\</span><span class="st">geospatial</span><span class="sc">\\</span><span class="st">geoBoundaries-NGA-ADM2-all"</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">layer =</span> <span class="st">"geoBoundaries-NGA-ADM2"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">crs =</span> <span class="dv">4326</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `geoBoundaries-NGA-ADM2' from data source 
   `C:\Yogendra345\ISSS624_A01\TakeHome_Ex02\data\geospatial\geoBoundaries-NGA-ADM2-all' 
@@ -365,7 +556,7 @@ Geodetic CRS:  WGS 84</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nga)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nga)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  shapeName            Level             shapeID           shapeGroup       
  Length:774         Length:774         Length:774         Length:774        
@@ -378,22 +569,22 @@ Geodetic CRS:  WGS 84</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nga <span class="ot">&lt;-</span> nga <span class="sc">%&gt;%</span> <span class="fu">select</span>(shapeName)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nga <span class="ot">&lt;-</span> nga <span class="sc">%&gt;%</span> <span class="fu">select</span>(shapeName)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="point-in-polygon-overlay." class="level2">
 <h2 class="anchored" data-anchor-id="point-in-polygon-overlay.">6. Point in Polygon Overlay.</h2>
-<p>Although <em>wp_sf</em> sf data frame consists of a field called <em>#clean_adm2</em> which by right should provides the LGA name of the water point located. However, it is always a good practice to exercise more caution when dealing with data accuracy.</p>
-<p>In this section, we are going to use a geoprocessing function (or commonly know as GIS analysis) called <strong>point-in-polygon overlay</strong> to transfer the attribute information in <em>nga</em> sf data frame into <em>wp_sf</em> data frame.</p>
+<p>Although <strong><em>wp_sf</em></strong> sf data frame consists of a field called <em>#clean_adm2</em> which should provides the LGA name of the water point located. However, it is always a good practice to exercise more caution when dealing with data accuracy.</p>
+<p>In this section, we are going to use a geoprocessing function (or commonly know as GIS analysis) called <strong>point-in-polygon overlay</strong> to transfer the attribute information in <strong><em>nga</em></strong> <strong>sf</strong> data frame into <strong><em>wp_sf</em></strong> data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>wp_sf <span class="ot">&lt;-</span> <span class="fu">st_join</span>(wp_sf, nga)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>wp_sf <span class="ot">&lt;-</span> <span class="fu">st_join</span>(wp_sf, nga)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Notice that a new field called <em>shapeName</em> has been added into <em>wp_sf</em> sf data frame. as shown below.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images_takehomex02/Screenshot%202022-12-08%20200444.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Fig-1</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Fig-1.</figcaption><p></p>
 </figure>
 </div>
 </section>
@@ -401,12 +592,11 @@ Geodetic CRS:  WGS 84</code></pre>
 <h2 class="anchored" data-anchor-id="derive-new-variables-using-dplyr-package.">7. Derive new variables using <strong>dplyr</strong> package.</h2>
 <section id="exploratory-data-analysis." class="level3">
 <h3 class="anchored" data-anchor-id="exploratory-data-analysis.">7.1 Exploratory Data Analysis.</h3>
-<p>Exploratory Data Analysis (EDA) is a crucial technique to understand insights of the data.</p>
-<p><strong><em>freq</em></strong> function of <strong><em>funmodelling</em></strong> package helps to understand different types of water points as shown below.</p>
+<p>Exploratory Data Analysis (EDA) is a crucial technique to understand insights of the data. <strong><em>freq</em></strong> function of <strong><em>funmodelling</em></strong> package helps to understand different types of water points as shown below.</p>
 <p>Note - Data Cleaning purpose, I have marked blank rows in column #status_clean as ‘Unknown_Blank’ to make it clear in the distribution graph below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data=</span>wp_sf, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#status_clean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data=</span>wp_sf, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#status_clean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: The `&lt;scale&gt;` argument of `guides()` cannot be `FALSE`. Use "none" instead as
 of ggplot2 3.3.4.
@@ -414,7 +604,7 @@ of ggplot2 3.3.4.
   Please report the issue at &lt;https://github.com/pablo14/funModeling/issues&gt;.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     #status_clean frequency percentage cumulative_perc
@@ -432,20 +622,20 @@ of ggplot2 3.3.4.
 </section>
 <section id="extracting-functional-water-points." class="level3">
 <h3 class="anchored" data-anchor-id="extracting-functional-water-points.">7.2 Extracting Functional Water Points.</h3>
-<p>In the code chunk below, <code>filter()</code> of dplyr is used to select functional water points.</p>
+<p>In the code chunk below, <strong><code>filter()</code></strong> of <strong>dplyr</strong> is used to select functional water points.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>wpt_functional <span class="ot">&lt;-</span> wp_sf <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">#status_clean</span><span class="st">`</span> <span class="sc">%in%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="st">"Functional"</span>, </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Functional but not in use"</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Functional but needs repair"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wpt_functional <span class="ot">&lt;-</span> wp_sf <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">#status_clean</span><span class="st">`</span> <span class="sc">%in%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="st">"Functional"</span>, </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Functional but not in use"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Functional but needs repair"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Here we run <strong>freq</strong> function of <strong>funmodelling</strong> package to understand distribution of ‘functional’ water points.</p>
+<p>Here we run <strong><em>freq( )</em></strong> function of <strong><em>funmodelling</em></strong> package to understand distribution of ‘functional’ water points.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data=</span>wpt_functional, </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#status_clean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data=</span>wpt_functional, </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#status_clean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                #status_clean frequency percentage cumulative_perc
@@ -462,21 +652,21 @@ of ggplot2 3.3.4.
 <h3 class="anchored" data-anchor-id="extracting-non-functional-water-point.">7.3 Extracting non-functional water point.</h3>
 <p>In the code chunk shown below, filter() of dplyr is used to select non-functional water points.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>wpt_nonfunctional <span class="ot">&lt;-</span> wp_sf <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">filter</span>(<span class="st">`</span><span class="at">#status_clean</span><span class="st">`</span> <span class="sc">%in%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">c</span>(<span class="st">"Abandoned/Decommissioned"</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Abandoned"</span>,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Non-Functional"</span>,</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Non functional due to dry season"</span>,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Non-Functional due to dry season"</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                            ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>wpt_nonfunctional <span class="ot">&lt;-</span> wp_sf <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">filter</span>(<span class="st">`</span><span class="at">#status_clean</span><span class="st">`</span> <span class="sc">%in%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">c</span>(<span class="st">"Abandoned/Decommissioned"</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Abandoned"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Non-Functional"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Non functional due to dry season"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Non-Functional due to dry season"</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                            ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let us understand distribution of ‘Non-functional’ water-points in graphical format.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data=</span>wpt_nonfunctional, </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#status_clean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data=</span>wpt_nonfunctional, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#status_clean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     #status_clean frequency percentage cumulative_perc
@@ -492,23 +682,23 @@ of ggplot2 3.3.4.
 <h3 class="anchored" data-anchor-id="section-4"></h3>
 </section>
 <section id="extracting-water-point-with-unknown-class." class="level3">
-<h3 class="anchored" data-anchor-id="extracting-water-point-with-unknown-class.">7.3 Extracting water point with Unknown class.</h3>
+<h3 class="anchored" data-anchor-id="extracting-water-point-with-unknown-class.">7.3 Extracting water point with ‘Unknown’ class.</h3>
 <p>In the code chunk below, <code>filter()</code> of dplyr is used to select water points with unknown status.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>wpt_unknown <span class="ot">&lt;-</span> wp_sf <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">#status_clean</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Unknown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>wpt_unknown <span class="ot">&lt;-</span> wp_sf <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">#status_clean</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Unknown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong><em>Conclusion –&gt; There are no water points with “Unknown” status.</em></strong></p>
 </section>
 <section id="understand-distribution-of-water-point-technology." class="level3">
 <h3 class="anchored" data-anchor-id="understand-distribution-of-water-point-technology.">7.4 Understand distribution of water point technology.</h3>
 <p>Let us plot the distribution of <strong><em>‘#water_tech_category’</em></strong> using freq() function.</p>
-<p>Note - We can choose ‘#water_tech_clean” column also - if we want to further explore type of ’Hand-Pumps’ as shown below. However for this exercise purpose, I will restrict myself to <strong><em>‘#water_tech_category’ only &amp; following graph is just for knowledge purpose.</em></strong></p>
+<p>Note - We can choose ’#water_tech_clean” column also if we want to further explore <u>types of ‘Hand-Pumps’</u> as shown below. However for this exercise purpose, I will restrict myself to <strong><em>‘#water_tech_category’ only &amp; following graph is created just for knowledge purpose.</em></strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data =</span> wp_sf,</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#water_tech_clean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data =</span> wp_sf,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#water_tech_clean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            #water_tech_clean frequency percentage cumulative_perc
@@ -527,10 +717,10 @@ of ggplot2 3.3.4.
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data =</span> wp_sf,</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#water_tech_category'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data =</span> wp_sf,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#water_tech_category'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  #water_tech_category frequency percentage cumulative_perc
@@ -542,36 +732,36 @@ of ggplot2 3.3.4.
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>wpt_handpump <span class="ot">&lt;-</span> wp_sf <span class="sc">%&gt;%</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">#water_tech_category</span><span class="st">`</span> <span class="sc">%in%</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="st">"Hand Pump - Afridev"</span>,</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Vergnet"</span>,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump"</span>,</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Nira"</span>,</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - India Mark II"</span>,</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - India Mark III"</span>,</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - EMAS"</span>,</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - India Mark"</span>,</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - PHE-6"</span>,</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Mono"</span>,</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Climax"</span>,</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Rope Pump"</span>,</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Tara"</span>,</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Consallen"</span>,</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Kardia"</span>,</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - SWN 80"</span>,</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - PB Mark II"</span>,</span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Walimi"</span>,</span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Blue"</span>,</span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Malda"</span>,</span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Inkar"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>wpt_handpump <span class="ot">&lt;-</span> wp_sf <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">#water_tech_category</span><span class="st">`</span> <span class="sc">%in%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="st">"Hand Pump - Afridev"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Vergnet"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Nira"</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - India Mark II"</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - India Mark III"</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - EMAS"</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - India Mark"</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - PHE-6"</span>,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Mono"</span>,</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Climax"</span>,</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Rope Pump"</span>,</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Tara"</span>,</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Consallen"</span>,</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Kardia"</span>,</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - SWN 80"</span>,</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - PB Mark II"</span>,</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Walimi"</span>,</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Blue"</span>,</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Malda"</span>,</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Hand Pump - Inkar"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let us see the distribution of the ‘Hand Pumps’</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data =</span> wpt_handpump,</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#water_tech_clean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data =</span> wpt_handpump,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">input =</span> <span class="st">'#water_tech_clean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           #water_tech_clean frequency percentage cumulative_perc
@@ -588,13 +778,13 @@ of ggplot2 3.3.4.
 <section id="performing-point-in-polygon-count." class="level2">
 <h2 class="anchored" data-anchor-id="performing-point-in-polygon-count.">8. Performing Point-in-Polygon Count.</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>nga_wp_sf <span class="ot">&lt;-</span> wp_sf <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">total wpt</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(wp_sf, wp_sf))) <span class="sc">%&gt;%</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">wpt functional</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(wp_sf, wpt_functional))) <span class="sc">%&gt;%</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">wpt non-functional</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(wp_sf, wpt_nonfunctional)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>nga_wp_sf <span class="ot">&lt;-</span> wp_sf <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">total wpt</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(wp_sf, wp_sf))) <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">wpt functional</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(wp_sf, wpt_functional))) <span class="sc">%&gt;%</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">wpt non-functional</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(wp_sf, wpt_nonfunctional)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
