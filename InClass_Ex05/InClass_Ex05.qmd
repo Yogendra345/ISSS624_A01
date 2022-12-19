@@ -1,0 +1,509 @@
+---
+title: "InClass_Ex05 : Build Logistic Regression to identify functional & non-functional water points in Osun state of Nigeria "
+author: "Yogendra Shinde"
+editor: visual
+---
+
+## 1. Objective.
+
+In this exercise, we aim to build a logistic regression model to identify 'Functional' & 'Non-Functional' water-points in ***Osun*** state of Nigeria.
+
+### 1.1 Input Data Used.
+
+Input data used for this modeling are :
+
+1.  **Osun.rds**  This file contains LGAs (Local Government Authority) boundaries of Osun state. It is sf polygon data frame and
+
+2.  **Osun_wp_sf.rds** contained water points data.
+
+### 1.2 Quick Notes on Logistic Regression.
+
+![Fig-1](images/reg2.png)
+
+## 2. Load required packages.
+
+In this exercise we need packages given in the table below -
+
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| \# | Package     | Function                                                                                                                |
++:==:+:===========:+:=======================================================================================================================:+
+| 1  | sf          | A package that provides [simple features access](https://en.wikipedia.org/wiki/Simple_Features) for R.                  |
+|    |             |                                                                                                                         |
+|    |             | Mainly used for importing, managing, and processing geospatial data.                                                    |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| 2  | tidyverse   | For performing data science tasks such as importing, wrangling and visualizing data.                                    |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| 3  | funModeling | This package contains a set of functions related to exploratory data analysis, data preparation, and model performance. |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| 4  | blorr       | Tool for building & validating binary logistic regression models.                                                       |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| 5  | corrplot    | For creating graphical display of a correlation matrix.                                                                 |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| 6  | ggpubr      | For data visualization.                                                                                                 |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| 7  | spdep       | Spatial Dependence - A collection of functions to create spatial weights matrix objects from polygon contiguities.      |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| 8  | skimr       | Exploratory Data Analysis.                                                                                              |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| 9  | tmap        | For choropleth map creation.                                                                                            |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| 10 | caret       | For building machine learning package.                                                                                  |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+| 11 | GWModel     | Geographically weighted (GW) models. Building machine learning model for particular branch of spatial statistics.       |
++----+-------------+-------------------------------------------------------------------------------------------------------------------------+
+
+: Table-1
+
+Following code chunk loads the required packages.
+
+```{r}
+pacman::p_load(sf,tidyverse,funModeling,blorr,corrplot,ggpubr,spdep,GWmodel,
+               tmap,skimr,caret)
+```
+
+## 3. Read Input Files.
+
+```{r}
+Osun_sf <- read_rds("rds\\Osun_wp_sf.rds")
+```
+
+```{r}
+Osun <- read_rds("rds\\Osun.rds")
+```
+
+```{r}
+summary(Osun_sf)
+```
+
+Plot bar chart to understand distribution of 'status' field of **Osun_sf** data frame. Note that status field takes only 2 values. True and False.
+
+```{r}
+Osun_sf %>%
+  freq(input = "status")
+```
+
+```{r}
+tmap_mode("view")
+tm_shape(Osun)+
+  tm_polygons(alpha = 0.4)+
+  tm_shape(Osun_sf)+
+  tm_dots(col = "status",
+          alpha = 0.6)+
+  tm_view(set.zoom.limits = c(9,12))
+```
+
+```{r}
+tmap_mode("plot")
+```
+
+## 4. Exploratory Data Analysis.
+
+Here we use **skim()** function to understand how data is distributed in Osun_Sf dataframe.
+
+Here are some important observations -
+
+1.  There are 4760 rows and 75 columns.
+
+2.  We see that there are many fields where \~ 20% or more values are missing. For example rehab_priority, crucialness_score, pressure_score, install_year. ***We conclude to drop these variables as they are not useful to create [sound]{.underline} machine learning model - especially Logistic Reg model.***
+
+```{r}
+Osun_sf %>%
+  skim()
+```
+
+We create a clean file using following chunk of code. Note than we have excluded missing values & created usage_capacity as factor.
+
+```{r}
+Osun_wp_sf_clean <- Osun_sf %>%
+  filter_at(vars(status,
+                 distance_to_primary_road,
+                 distance_to_secondary_road,
+                 distance_to_tertiary_road,
+                 distance_to_city,
+                 distance_to_town,
+                 water_point_population,
+                 local_population_1km,
+                 usage_capacity,
+                 is_urban,
+                 water_source_clean),
+            all_vars(!is.na(.))) %>%
+  mutate(usage_capacity = as.factor(usage_capacity))
+```
+
+-   Note that ***Osun_wp_sf_clean*** file contains 4 less records.
+
+```{r}
+summary(Osun_wp_sf_clean)
+```
+
+## 5. Correlation Analysis.
+
+```{r}
+Osun_wp <- Osun_wp_sf_clean %>%
+  select(c(7,35:39,42:43,46:47,57)) %>%
+  st_set_geometry(NULL) # Drop geometry
+```
+
+### 5.1 Correlation Matrix.
+
+```{r}
+cluster_vars.cor = cor(Osun_wp[,2:7])
+corrplot.mixed(cluster_vars.cor,tl.cex = 0.7,
+         lower = "ellipse", number.cex = 0.6,
+               upper = "number",
+               tl.pos = "lt",
+               diag = "l",
+               tl.col = "black")
+```
+
+[**Observation**]{.underline} **-**
+
+We observe that none of the variables are highly correlated. We use rule of thumb, where c**orrelation coefficient \>= 0.8** is considered as high correlation and we would recommend that such variables should not be considered for correlation.
+
+## 6. Perform Logistics Regression.
+
+In the code chunk below, we use ***glm()** function* of R to build logistic regression for the water point status.
+
+```{r}
+model <- glm(status~ distance_to_primary_road+
+               distance_to_secondary_road+
+               distance_to_tertiary_road+
+               distance_to_city+
+               distance_to_town+
+               is_urban+
+               usage_capacity+
+               water_source_clean+
+               water_point_population+
+               local_population_1km,
+             data = Osun_wp_sf_clean,
+             family = binomial(link = 'logit'))
+```
+
+Here we use blorr package to generate report.
+
+```{r}
+blr_regress(model)
+```
+
+**6.1 Interpretation of the report.**
+
+1.  ***Response Summary*** tells us that 2114 records belong to class 0 and 2642 records belong to class 1.
+
+2.  At 95% confidence level, variables with p-value less than 0.05 are statistically significant. These are all independent variables except `distance_to_primary_road` and `distance_to_secondary_road`.
+
+3.  ***Maximum Likelihood Report*** tells us that 'Estimate' column gives us correlation coefficient which ranges from -1 to +1. Please ignore correlation coefficient 1.2882 as it is for the categorical variable 'water_source_cleanProtected Spring' and thus it has no significance.
+
+    Similarly , ***water_point_population*** and ***local_population_1km*** are categorical variables and should not be considered for analysis where correlation co-efficient is evaluated.
+
+4.  **For continuous variables** - A positive value implies a direct correlation and a negative value implies an negative/inverse correlation. Value closer to 1 implies strong positive relation and value closer to -1 indicates strong negative correlation.
+
+## 6.2 Confusion Matrix.
+
+```{r}
+blr_confusion_matrix(model,cutoff = 0.5)
+```
+
+### **6.3 Interpretation of Confusion Matrix.**
+
+1.  In order to assess the overall performance of a logistic regression model, we tend to refer Misclassification Rate. The classification table above shows that there are 346 false negative and 275 false positive. The overall misclassification error is 22.06% (i.e. (738+813)/4756) = 32.61%
+
+    According to the Misclassification Rate measure, the model predicts 100 - 32.61 = **67.39 %** of the water point status correctly - which is the accuracy of the model.
+
+2.  Let us understand True Positive Rate and True Negative Rate. See following figure for reference.
+
+3.  Sensitivity also known as true positive rate or recall. It answers the question, "If the model predicts a positive event, what is the probability that it really is positive?".Our model shows that Sensitivity = 72.07%
+
+4.  Specificity is the true negative rate. It answer the question, "If the model predicts a negative event, what is the probability that it really is negative?". Our model shows that Specificity = 61.54%
+
+    ![Metrics](images/Metrics.png){width="314"}
+
+## 7. How can we improve performance ?
+
+Though our results are encouraging for first try however there is still lot of scope for improvement. Let us convert Simple Feature Dataframe into Spatial Point Polygon (Spatial point dataframe) version
+
+```{r}
+Osun_wp_sp <- Osun_wp_sf_clean %>%
+  select(c(status,
+           distance_to_primary_road,
+           distance_to_secondary_road,
+           distance_to_tertiary_road,
+           distance_to_city,
+           distance_to_town,
+           water_point_population,
+           local_population_1km,
+           is_urban,
+           usage_capacity,
+           water_source_clean
+           )) %>%
+  as_Spatial()
+#
+Osun_wp_sp
+```
+
+**Important Note -** We have now Osun_wp_sp with 4 records less. We have 4756 records instead of 4760.
+
+## 8. Calculate Distance Matrix -Fixed Bandwidth.
+
+```{r}
+
+
+bw.fixed <- bw.ggwr(status ~ distance_to_primary_road +
+                      distance_to_secondary_road+
+                      distance_to_tertiary_road+
+                      distance_to_city+
+                      distance_to_town+
+                      water_point_population+
+                      local_population_1km+
+                      is_urban+
+                      usage_capacity+
+                      water_source_clean,
+                    data = Osun_wp_sp,
+                    family = "binomial",
+                    approach = "AIC",
+                    kernel = "gaussian",
+                    adaptive = FALSE, # for fixed bandwidth
+                    longlat = FALSE)# input data have been converted to #projected CRS
+```
+
+-   **AICc - Akaike Information Criterion Corrected value is 4761.809.**
+
+```{r}
+bw.fixed
+```
+
+We get the above output. We feed it into the `bw` argument in [*ggwr.basic()*](https://www.rdocumentation.org/packages/GWmodel/versions/2.2-9/topics/ggwr.basic) of **GWmodel** in the code chunk below.
+
+```{r}
+gwlr.fixed <- ggwr.basic(status ~ distance_to_primary_road+
+                           distance_to_secondary_road+
+                           distance_to_city+
+                           distance_to_town+
+                           water_point_population+
+                           local_population_1km+
+                           is_urban+
+                           usage_capacity+
+                           water_source_clean,
+                         data = Osun_wp_sp,
+                         bw = bw.fixed,
+                         family = "binomial",
+                         kernel = "gaussian",
+                         adaptive = FALSE,
+                         longlat = FALSE)
+```
+
+```{r}
+gwlr.fixed
+```
+
+To assess the performance of the gwLR, firstly, we will convert the SDF object in as data frame by using the code chunk below.
+
+```{r}
+gwr.fixed <- as.data.frame(gwlr.fixed$SDF)
+```
+
+Now, we will label yhat (predicted) values as
+
+-   if yhat \>= 0.5 then **1** and
+
+-   if yhat \< 0.5 then **0**
+
+```{r}
+gwr.fixed <- gwr.fixed %>%
+  mutate(most = ifelse(
+    gwr.fixed$yhat >= 0.5, T,F)
+  )
+```
+
+```{r}
+freq(gwr.fixed$y)
+```
+
+```{r}
+freq(gwr.fixed$most)
+```
+
+```{r}
+gwr.fixed$y <- as.factor(gwr.fixed$y)
+gwr.fixed$most <- as.factor(gwr.fixed$most)
+CM <- confusionMatrix(data = gwr.fixed$most,
+                      reference= gwr.fixed$y,
+                      positive = "TRUE" )
+CM
+```
+
+We have used argument positive = "TRUE".
+
+Accuracy = 87.2% and
+
+Sensitivity = 89.06% and
+
+Specificity = 84.86 %
+
+```{r}
+Osun_wp_sf_selected <- Osun_wp_sf_clean %>%
+  select(c(ADM2_EN, ADM2_PCODE,ADM1_EN,ADM1_PCODE, status))
+```
+
+Now let us append *gwr.fixed* matrix onto osun_wp_sf_selected to produce an output simple feature object called *gwr_sf.fixed* using *cbind()* function
+
+```{r}
+gwr_sf.fixed <- cbind(Osun_wp_sf_selected, gwr.fixed)
+```
+
+```{r}
+tmap_mode("view")
+
+actual <- tm_shape(Osun) +
+  tmap_options(check.and.fix = TRUE) +
+  tm_polygons(alpha = 0.4) +
+  tm_shape(Osun_sf) +
+  tm_dots(col = "status",
+          alpha = 0.6,
+          palette = "YlOrRd") +
+  tm_view(set.zoom.limits = c(8, 12))
+
+prob_T <- tm_shape(Osun) +
+  tm_polygons(alpha = 0.4) +
+  tm_shape(gwr_sf.fixed) + 
+  tm_dots(col = "yhat",
+          border.col = "gray60",
+          border.lwd = 1) +
+  tm_view(set.zoom.limits = c(8, 12))
+
+tmap_arrange(actual, prob_T, 
+             asp = 1, ncol = 2, sync = TRUE)
+```
+
+We see that the predictions are largely aligned with the actual status of the water points
+
+## 9. Visualizing Co-efficient Estimates.
+
+The code chunk below is used to create an interactive point symbol map.
+
+***Remember yhat meaning predicted value of dependent variable Y.***
+
+```{r}
+tmap_mode("view")
+
+prob_T <- tm_shape(Osun)+
+  tm_polygons(alpha = 0.1)+
+  tm_shape(gwr_sf.fixed)+
+  tm_dots(col = "yhat",
+border.col = 'gray60',
+border.lwd  = 1)+
+    tm_view(set.zoom.limits = c(8.5,14))
+#
+prob_T
+```
+
+```{r}
+tmap_mode("plot")
+```
+
+## 10. Employing Only Statistically Significant Variables in Global and gwLR Models.
+
+### 
+
+10.1 - Drop not statistically significant variables.
+
+As we earlier saw that 2 of the 10 variables, distance_to_primary_road and distance_to_secondary_road, are not statistically significant (p-values \> 0.05), we should build logistic regression models **without** these 2 variables.
+
+Hence, we repeat the relevant steps above to replicate the model building, assessment and visualisation process in the following code chunks, starting with constructing the model with only the 8 statistically significant variables.
+
+```{r}
+model_refined <- glm(status ~ distance_to_tertiary_road +
+               distance_to_city +
+               distance_to_town +
+               is_urban +
+               usage_capacity +
+               water_source_clean +
+               water_point_population +
+               local_population_1km,
+             data = Osun_wp_sp,
+             family = binomial(link = "logit"))
+
+blr_regress(model_refined)
+```
+
+We check and see that the remaining variables are all statistically significant to the linear regression model (p-values \< 0.05).
+
+The code chunk below calculates and displays the confusion matrix for the refined model. We will discuss the results together with that for the refined gwLR model in the subsequent subsection.
+
+```{r}
+blr_confusion_matrix(model_refined, cutoff = 0.5)
+```
+
+### 
+
+10.2 Determining Fixed Bandwidth for GWR Model.
+
+```{r}
+bw.fixed_refined <- bw.ggwr(status ~ distance_to_tertiary_road +
+                      distance_to_city +
+                      distance_to_town +
+                      is_urban +
+                      usage_capacity +
+                      water_source_clean +
+                      water_point_population +
+                      local_population_1km,
+                      data = Osun_wp_sp,
+                    family = "binomial",
+                    approach  = "AIC",
+                    kernel = "gaussian",
+                    adaptive = FALSE, # for fixed bandwidth
+                    longlat = FALSE) # input data have been converted to projected CRS
+```
+
+```{r}
+bw.fixed_refined
+```
+
+The output for bw.fixed_refined is given above. We will use this optimal fixed distance value for model assessment in the next subsection.
+
+### 10.3 Model Assessment.
+
+```{r}
+gwlr.fixed_refined <- ggwr.basic(status ~ distance_to_tertiary_road +
+                           distance_to_city +
+                           distance_to_town +
+                           is_urban +
+                           usage_capacity +
+                           water_source_clean +
+                           water_point_population +
+                           local_population_1km,
+                      data = Osun_wp_sp,
+                      bw = 2377.371,
+                      family = "binomial",
+                      kernel = "gaussian",
+                      adaptive = FALSE,
+                      longlat = FALSE)
+```
+
+Note that we use the cleaned version of the water point sf data frame for consistency in the geometrics with our model building (4 water points with missing values excluded).
+
+### 10.4 Building Fixed Bandwidth GWR Model.
+
+```{r}
+bw.fixed <- bw.ggwr(status ~ distance_to_primary_road +
+                      distance_to_secondary_road +
+                      distance_to_tertiary_road +
+                      distance_to_city +
+                      distance_to_town +
+                      is_urban +
+                      usage_capacity +
+                      water_source_clean +
+                      water_point_population +
+                      local_population_1km,
+                      data = Osun_wp_sp,
+                    family = "binomial",
+                    approach  = "AIC",
+                    kernel = "gaussian",
+                    adaptive = FALSE, # for fixed bandwidth
+                    longlat = FALSE) # input data have been converted to projected CRS
+```
+
+### 
+
+10.5 **Conclusion**
+
+We see that the model accuracy and specificity improve very slightly by removing the non-statistically significant variables from the gwLR model, but the sensitivity drops slightly.
